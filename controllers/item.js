@@ -10,4 +10,23 @@ const createItem = async(req,res) => {
      return res.status(201).json({item})
 }
 
-module.exports = {createItem}
+const getItem = async (req, res) => {
+   const item  = await Item.find({})
+   res.status(200).json({item})
+}
+
+//filter items 
+
+const filterItems = async (req, res) => {
+   const {name, price, category} = req.query
+   const itemQuery = {}
+
+   if(name) {
+      itemQuery.name =  {$regrex: name, $otions: 'i'}
+   }
+
+   let result = await Item.find(itemQuery)
+   res.status(200).json({item})
+}
+
+module.exports = {createItem, getItem,filterItems}
