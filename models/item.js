@@ -4,26 +4,30 @@ const ObjectID = mongoose.Schema.Types.ObjectId
 const itemSchema = new mongoose.Schema({
     owner : {
        type: ObjectID,
-       required: true,
+       required: [ true, 'Owner Information is required'],
        ref: 'User'
     },
     name: {
        type: String,
        required: true,
-       trim: true
+       trim: [ true, 'Name is required']
     },
     description: {
       type: String,
-      required: true
+      required: [ true, 'Description is required']
     },
     category: {
        type: String,
-       required: true
+       required: [ true, 'Category is required']
     },
     price: {
        type: Number,
-       required: true
-    }
+       required:[ true, 'Price is required']
+    },
+    image: {
+      type: String,
+      required: [true, 'Item image is required...'],
+    },
     }, {
     timestamps: true
     })
