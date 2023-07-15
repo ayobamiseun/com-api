@@ -19,11 +19,11 @@ const getItem = async (req, res) => {
 //filter items
 
 const filterItems = async (req, res) => {
-  const { name, category,  description, sort, fields } = req.query;
-  const itemQuery = {};
+  const { name, category,  description, sort, fields, numericFilters } = req.query;
+  const queryObject = {};
 
   if (name) {
-    itemQuery.name = { $regex: name, $options: "i" };
+   queryObject.name = { $regex: name, $options: "i" };
   }
 
   if (description) {
@@ -49,14 +49,14 @@ const filterItems = async (req, res) => {
     const option = ['price'];
     filters = filters.split(",").forEach((item) => {
       const [field, operator, value] = item.split("-");
-      if (options.includes(field)) {
+      if (option.includes(field)) {
         queryObject[field] = { [operator]: Number(value) };
       }
     });
 
  }
 
-  let result = Item.find(itemQuery);
+  let result = Item.find(queryObject);
 
   if (sort) {
     const sortList = sort.split(",").join(" ");
@@ -78,7 +78,7 @@ const filterItems = async (req, res) => {
   const items = await result;
   res.status(200).json({ items, nbHits: items.length });
    
-  res.status(200).json({ result });
+
 };
 
 module.exports = { createItem, getItem, filterItems };
