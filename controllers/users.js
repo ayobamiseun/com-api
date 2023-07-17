@@ -5,10 +5,12 @@ const createUser = async (req, res) => {
   try {
     await user.save();
     const token = await user.generateAuthToken();
+    console.log(token)
     res.status(201).send(user);
   } catch (error) {
     res.status(400).send(error.message);
   }
+  
 };
 const loginUser = async (req, res) => {
   try {
@@ -21,6 +23,7 @@ const loginUser = async (req, res) => {
   } catch (error) {
     res.status(400).send(error)
    }   
+   console.log(token)
 }
 
 module.exports = { createUser, loginUser };
