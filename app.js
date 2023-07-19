@@ -13,8 +13,20 @@ const http = require("http");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const connectDB = require("./db/connect");
+const cors = require("cors");
+
+
+
+
 
 var app = express();
+
+//cors 
+var corsOptions = {
+  origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions));
 
 const port = process.env.port || 3000;
 
