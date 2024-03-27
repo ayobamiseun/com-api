@@ -3,8 +3,7 @@
 var User = require("../models/users");
 
 var createUser = function createUser(req, res) {
-  var user, _token;
-
+  var user, token;
   return regeneratorRuntime.async(function createUser$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -19,8 +18,8 @@ var createUser = function createUser(req, res) {
           return regeneratorRuntime.awrap(user.generateAuthToken());
 
         case 6:
-          _token = _context.sent;
-          console.log(_token);
+          token = _context.sent;
+          console.log(token);
           res.status(201).send(user);
           _context.next = 14;
           break;
@@ -39,8 +38,7 @@ var createUser = function createUser(req, res) {
 };
 
 var loginUser = function loginUser(req, res) {
-  var user, _token2;
-
+  var user, token;
   return regeneratorRuntime.async(function loginUser$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -55,33 +53,25 @@ var loginUser = function loginUser(req, res) {
           return regeneratorRuntime.awrap(user.generateAuthToken());
 
         case 6:
-          _token2 = _context2.sent;
+          token = _context2.sent;
           res.send({
             user: user,
-            token: _token2
+            token: token
           });
-
-          if (user) {
-            res.status(200).send("good");
-          }
-
-          _context2.next = 14;
+          _context2.next = 13;
           break;
 
-        case 11:
-          _context2.prev = 11;
+        case 10:
+          _context2.prev = 10;
           _context2.t0 = _context2["catch"](0);
           res.status(400).send(_context2.t0);
 
-        case 14:
-          console.log(token);
-
-        case 15:
+        case 13:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 11]]);
+  }, null, null, [[0, 10]]);
 };
 
 module.exports = {

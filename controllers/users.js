@@ -17,13 +17,11 @@ const loginUser = async (req, res) => {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.generateAuthToken()
     res.send({ user, token})
-    if(user) {
-      res.status(200).send("good")
-    }
+   
   } catch (error) {
     res.status(400).send(error)
    }   
-   console.log(token)
+  
 }
 
 module.exports = { createUser, loginUser };
