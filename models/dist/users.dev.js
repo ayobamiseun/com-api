@@ -22,7 +22,7 @@ var userSchema = new mongoose.Schema({
     lowercase: true,
     validate: function validate(value) {
       if (!validator.isEmail(value)) {
-        throw new Error('Email is invalid');
+        throw new Error("Email is invalid");
       }
     }
   },
@@ -32,10 +32,14 @@ var userSchema = new mongoose.Schema({
     minLength: 7,
     trim: true,
     validate: function validate(value) {
-      if (value.toLowerCase().includes('password')) {
-        throw new Error('password musn\’t contain password');
+      if (value.toLowerCase().includes("password")) {
+        throw new Error("password musn’t contain password");
       }
     }
+  },
+  verified: {
+    type: Boolean,
+    "default": false
   },
   tokens: [{
     token: {

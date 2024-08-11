@@ -1,33 +1,40 @@
-const mongoose = require('mongoose')
-const ObjectID = mongoose.Schema.Types.ObjectId
+const mongoose = require("mongoose");
 
-const cartSchema = new mongoose.Schema({
-    owner : {
-      type: ObjectID,
-       required: true,
-       ref: 'User'
-     },
-    items: [{
-      itemId: {
-       type: ObjectID,
-       ref: 'Item',
-       required: true
+const cartSchema = new mongoose.Schema(
+  {
+    items: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "product",
+          required: [true, "product id is required"],
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+        color: String,
+        size: String,
+        price: Number,
+      },
+    ],
+    totalPrice: Number,
+    totalPriceAfterDiscount: Number,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: [true, "User id is required"],
     },
-    name: String,
-    quantity: {
-       type: Number,
-       required: true,
-       min: 1,
-       default: 1},
-       price: Number
-     }],
-    bill: {
-        type: Number,
-        required: true,
-       default: 0
-      }
-    }, {
-    timestamps: true
-    })
+  },
+  { timestamps: true }
+);
 
-   module.exports = mongoose.model('Cart', cartSchema)
+// hook to populate product on find
+cartSchema.pre(/^find/, function (next) {
+  this.populate({path:"items.product", select: 'title cover ratingsAverage'}),
+  next();
+})
+
+const Cart = mongoose.model("cart", cartSchema);
+
+module.exports = Cart;

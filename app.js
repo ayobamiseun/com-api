@@ -7,6 +7,7 @@ var logger = require("morgan");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var itemsRouter = require("./routes/item")
+const otpRoutes = require("./routes/otpRoutes");
 require("dotenv").config();
 const https = require("https");
 const http = require("http");
@@ -36,6 +37,7 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json());
+app.disable("x-powered-by");
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
@@ -43,6 +45,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/items", itemsRouter)
+app.use('/api/v1', otpRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
